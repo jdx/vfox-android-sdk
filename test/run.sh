@@ -68,6 +68,10 @@ if [[ ! -f "$SCRIPT_DIR/resources/repository2-3.xml" ]]; then
     echo "FAIL: Missing test resource: repository2-3.xml"
     exit 1
 fi
+if [[ ! -f "$SCRIPT_DIR/fixtures/build_tools_disabled/mise.toml" ]]; then
+    echo "FAIL: Missing build-tools opt-out fixture"
+    exit 1
+fi
 echo "PASS: Test resources exist"
 
 # Test 6: Verify mirror URL handling
@@ -76,6 +80,10 @@ if command -v lua &>/dev/null; then
     ANDROID_SDK_MIRROR_URL="https://mirror.example/android" \
         lua "$SCRIPT_DIR/mirror_url.lua" "$PLUGIN_DIR"
     echo "PASS: Mirror URL is used by available and pre-install hooks"
+
+    echo "Test 7: Verify build-tools PATH selection..."
+    lua "$SCRIPT_DIR/build_tools_path.lua" "$PLUGIN_DIR"
+    echo "PASS: Highest build-tools version is selected and can be disabled"
 else
     echo "SKIP: lua not available for hook tests"
 fi
