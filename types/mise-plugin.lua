@@ -168,6 +168,8 @@ local json = {}
 ---@field exists fun(path: string): boolean Check if a file exists
 ---@field symlink fun(src: string, dst: string) Create a symbolic link
 ---@field join_path fun(...: string): string Join path components
+---@field list fun(path: string): string[] List directory entries
+---@field stat fun(path: string): {is_dir: boolean}|nil Return file metadata, or nil when missing
 local file = {}
 
 -- cmd module ---------------------------------------------------------
